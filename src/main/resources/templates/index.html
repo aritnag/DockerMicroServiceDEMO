@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Tasks Portal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- Bootstrap -->
+    <link href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
+
+</head>
+<body style="padding-top:50px;">
+ <!-- Nav Bar -->
+
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Task</a>
+      </div>
+    </div>
+  </div>
+
+<!-- Body -->
+  <div class="container">
+    <h1>Task List</h1>
+
+    <hr/>
+
+  <div class = "todoList">
+    <form class="form-horizontal" role="form" th:action="@{/update}" th:object="${items}" method="POST">
+      <table class="table table-bordered table-striped" id="todoItems">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Category(Time Line, Type and Complexity)</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item,i : *{todoList}" >
+                <input type="hidden" th:field="*{todoList[__${i.index}__].id}"/>
+                <td th:text="${item.name}">Item_name</td><input type="hidden" th:field="*{todoList[__${i.index}__].name}"/>
+                <td th:text="${item.timeline + ',' + item.type + ',' + item.complexity}">item_category</td>
+            </tr>
+        </tbody>
+      </table>
+        </form>
+    </div>
+
+    <hr/>
+
+    <!-- Item Input Form -->
+    <div class="todoForm">
+      <form class="form-horizontal" role="form" th:action="@{/add}" th:object="${newitem}" method="POST">
+        <div class="form-group">
+          <label for="inputItemName" class="col-sm-2">Task Name</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{name}" class="form-control" id="inputItemName" placeholder="Enter name"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputItemCategory" class="col-sm-2">Task Category</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{timeline}" class="form-control" id="inputItemCategoryTimeLine" placeholder="Enter Timeline"/><br></br>
+             <input type="text" th:field="*{type}" class="form-control" id="inputItemCategoryType" placeholder="Enter Type"/><br></br>
+              <input type="text" th:field="*{complexity}" class="form-control" id="inputItemCategoryComplexity" placeholder="Enter Complexity"/>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Task</button>
+
+      </form>
+    </div>
+
+  </div>
+
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.2.0/bootstrap.min.js"></script>
+
+</body>
+</html>
